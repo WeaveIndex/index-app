@@ -1,28 +1,38 @@
 <script lang="ts">
     import Card from "./Card.svelte";
+    import {onMount} from "svelte";
+    import LocalMods from "./LocalMods.svelte";
 
-    import { onMount } from "svelte";
-    const endpoint = "https://raw.githubusercontent.com/WeaveIndexRepoBot/ModRepo/main/data/mods.json";
-    let posts = [];
+    type ModList = {
+        name: string
+        author: string
+        murl: string
+        shortdesc: string
+    }
+
+    const endpoint: string = "https://raw.githubusercontent.com/WeaveIndexRepoBot/ModRepo/main/data/mods.json";
+    let mods: ModList[] = [];
 
     onMount(async function () {
         const response = await fetch(endpoint);
         const data = await response.json();
 
-        posts = data
+        mods = data
 
         console.log(data);
     });
 </script>
 
-<div class="w-full h-full">
-    <div class="m-4 h-full pb-8 text-white overflow-y-auto">
-        <div class="w-full flex flex-col">
-                <div class="grid grid-cols-2 gap-2">
-                    {#each posts as data}
-                        <Card title={data.name} author={data.author} modurl={data.murl} desc={data.shortdesc}/>
-                    {/each}
-                </div>
+<div class="m-4">
+    <div class="flex flex-row gap-4">
+        <div class="grid grid-cols-2 gap-2">
+            {#each mods as data}
+                <Card title={data.name} author={data.author} modurl={data.murl} desc={data.shortdesc}/>
+            {/each}
+        </div>
+
+        <div>
+            <LocalMods />
         </div>
     </div>
 </div>

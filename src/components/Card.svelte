@@ -3,7 +3,7 @@
     import {writeBinaryFile, createDir, exists, BaseDirectory} from '@tauri-apps/api/fs'
     import {onMount} from "svelte";
 
-    export let title, desc, author, modurl;
+    export let title: string, desc: string, author: string, modurl: string;
     let httpClient: Client
 
     onMount(async () => {
@@ -32,15 +32,15 @@
 </script>
 
 <div>
-    <div class="block max-w-sm h-auto p-6 border border-gray-200 rounded-lg shadow bg-gray-800 border-gray-700">
+    <div class="block h-full p-6 border rounded-lg shadow bg-gray-800 border-gray-700">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{title}</h5>
         <h6 class="mb-2 text-sm tracking-tight text-white">By {author}</h6>
         <p class="font-normal text-gray-700 dark:text-gray-400">{desc}</p>
 
-        <div class="mt-4 flex justify-end">
+        <div class="flex mt-auto justify-end">
             <button
-              class="bg-gray-700 hover:bg-gray-900 p-2 rounded-lg transition duration-150 ease-in-out"
-              on:click={async () => await downloadMod(modurl, title)}>Download
+                    class="text-white bg-gray-700 hover:bg-gray-900 p-2 rounded-lg transition duration-150 ease-in-out"
+                    on:click={async () => await downloadMod(modurl, title)}>Download
             </button>
         </div>
     </div>
