@@ -1,6 +1,6 @@
 <script lang="ts">
     import {Client, getClient, ResponseType} from '@tauri-apps/api/http';
-    import {writeBinaryFile, BaseDirectory} from '@tauri-apps/api/fs'
+    import {writeBinaryFile, BaseDirectory, exists, createDir} from '@tauri-apps/api/fs'
     import type {BinaryFileContents} from '@tauri-apps/api/fs'
     import {onMount} from "svelte";
 
@@ -9,6 +9,10 @@
 
     onMount(async () => {
         httpClient = await getClient()
+
+        if (!await (exists('.weave', {dir: BaseDirectory.Home}))) {
+            await createDir(".weave/mods", {dir: BaseDirectory.Home})
+        }
     })
 
     async function downloadMod(url: String, modName: String) {
