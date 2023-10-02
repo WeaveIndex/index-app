@@ -1,6 +1,7 @@
 <script lang="ts">
     import {Client, getClient, ResponseType} from '@tauri-apps/api/http';
-    import {writeBinaryFile, createDir, exists, BaseDirectory} from '@tauri-apps/api/fs'
+    import {writeBinaryFile, BaseDirectory} from '@tauri-apps/api/fs'
+    import type {BinaryFileContents} from '@tauri-apps/api/fs'
     import {onMount} from "svelte";
 
     export let title: string, desc: string, author: string, modurl: string;
@@ -8,14 +9,10 @@
 
     onMount(async () => {
         httpClient = await getClient()
-
-        if (!await (exists('.weave', {dir: BaseDirectory.Home}))) {
-            await createDir(".weave/mods", {dir: BaseDirectory.Home})
-        }
     })
 
     async function downloadMod(url: String, modName: String) {
-        const response = await httpClient.get(url, {
+        const response = await httpClient.get(`${url}`, {
             responseType: ResponseType.Binary
         })
 
@@ -23,7 +20,7 @@
 
         await writeBinaryFile(
             modDir + modName + ".jar",
-            response.data,
+            response.data as BinaryFileContents,
             {dir: BaseDirectory.Home}
         )
 
@@ -32,15 +29,15 @@
 </script>
 
 <div>
-    <div class="block h-full p-6 border rounded-lg shadow bg-gray-800 border-gray-700">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{title}</h5>
-        <h6 class="mb-2 text-sm tracking-tight text-white">By {author}</h6>
+    <div class="block relative max-w-sm h-56 p-6 rounded-lg bg-custom2">
+        <h5 class="mb-2 text-2xl font-mono font-bold tracking-tight text-white">{title}</h5>
+        <h6 class="mb-2 text-xs tracking-tight text-white">By {author}</h6>
         <p class="font-normal text-gray-700 dark:text-gray-400">{desc}</p>
 
-        <div class="flex mt-auto justify-end">
+        <div class="flex absolute bottom-4 items-center justify-end pt-2.5">
             <button
-                    class="text-white bg-gray-700 hover:bg-gray-900 p-2 rounded-lg transition duration-150 ease-in-out"
-                    on:click={async () => await downloadMod(modurl, title)}>Download
+                    class="font-semibold font-mono rounded-md bg-custom3 hover:bg-custom1 transition duration-300 ease-in-out text-white p-2 px-4"
+                    on:click={async () => await downloadMod(`${modurl}`, title)}>Download
             </button>
         </div>
     </div>

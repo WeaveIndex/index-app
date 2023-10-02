@@ -8,18 +8,26 @@
   },
   "package": {
     "productName": "IndexApp",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "tauri": {
     "allowlist": {
       "all": false,
       "shell": {
         "all": false,
-        "open": true
+        "open": true,
+        "execute": true,
+        "scope": [
+          {
+            "name": "diagnose",
+            "cmd": "java",
+            "args": ["-jar", "WeaveDiagnose.jar"]
+          }
+        ]
       },
       "http": {
         "request": true,
-        "scope": ["https://github.com/**"]
+        "scope": ["https://github.com/**", "https://gitlab.com/**", "https://cat-girl.tech/api/all"]
       },
       "fs": {
         "exists": true,
@@ -56,10 +64,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": false,
+        "resizable": true,
         "title": "Index App",
-        "width": 1414,
-        "height": 804
+        "width": 1131,
+        "height": 678
       }
     ]
   }
