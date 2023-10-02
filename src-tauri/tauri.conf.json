@@ -64,7 +64,7 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": true,
+        "resizable": false,
         "title": "Index App",
         "width": 1131,
         "height": 678
