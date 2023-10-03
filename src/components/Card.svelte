@@ -33,7 +33,7 @@
 </script>
 
 <div>
-    <div class="block relative max-w-sm h-56 p-6 rounded-lg bg-custom2">
+    <div class="block relative max-w-sm h-56 p-6 rounded-xl bg-custom2">
         <h5 class="mb-2 text-xl font-mono font-bold tracking-tight text-white">{title}</h5>
         <h6 class="mb-2 text-xs tracking-tight text-white">By {author}</h6>
         <p class="font-normal text-gray-700 dark:text-gray-400">{desc}</p>
